@@ -42,12 +42,12 @@ namespace SabberStoneCoreAi
 
 			Console.WriteLine("Setup POGameHandler");
 			AbstractAgent player1 = new RandomAgent();
-			AbstractAgent player2 = new RandomAgentLateEnd();
+			AbstractAgent player2 = new MCTSAgent();
 			var gameHandler = new POGameHandler(gameConfig, player1, player2, repeatDraws:false);
 
 			Console.WriteLine("Simulate Games");
 			//gameHandler.PlayGame();
-			gameHandler.PlayGames(nr_of_games:100, addResultToGameStats:true, debug:false);
+			gameHandler.PlayGames(nr_of_games:5, addResultToGameStats:true, debug:false);
 			GameStats gameStats = gameHandler.getGameStats();
 
 			gameStats.printResults();
