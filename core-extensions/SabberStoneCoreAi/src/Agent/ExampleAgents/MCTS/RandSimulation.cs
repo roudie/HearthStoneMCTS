@@ -8,49 +8,33 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 {
 	class RandSimulation
 	{
-		public static bool simulatePlay(Node simulateNode, Node root)
+		public static bool simulatePlay(Node node)
 		{
-			Node tempNode = simulateNode;
-
-			if (tempNode.nodeTask.PlayerTaskType == PlayerTaskType.END_TURN)
-			{
-				return Reward.getReward(tempNode.State, root.State);
-			}
-
-			List<PlayerTask> options = tempNode.State.CurrentPlayer.Options();
-			Dictionary<PlayerTask, POGame.POGame> states = tempNode.State.Simulate(options);
+			//Node tempNode = simulateNode;
+			
 			Random random = new Random();
-			int rnd;
-			rnd = random.Next(options.Count);
+			POGame.POGame state = node.State;
+			//state.Process(options[rnd]);
+			List<PlayerTask> options = state.CurrentPlayer.Options();
+			//state = states.GetValueOrDefault(options[rnd]);
 
-			POGame.POGame state = null;
-			while (options[rnd].PlayerTaskType != PlayerTaskType.END_TURN)
+			while (options.Count>0)
 			{
-				if (state == null)
+				PlayerTask playerTask = options[random.Next(options.Count)];
+				if (state.CurrentOpponent.Hero.Health < 1 || state.CurrentPlayer.Hero.Health < 1)
 				{
-
-					state = states.GetValueOrDefault(options[rnd]);
-				}
-				else
-				{
-
-					state.Process(options[rnd]);
+					if (state.FirstPlayer.Hero.Health > 0)
+						return true;
+					return false;
 				}
 
+				state = node.State.Simulate(playerTask);
+
+				node = new Node(state);
 				options = state.CurrentPlayer.Options();
-				rnd = random.Next(options.Count);
-
-			}
-			if (state == null)
-			{ 
-				state = states.GetValueOrDefault(options[rnd]);
-			}
-			else
-			{
-				state.Process(state.CurrentPlayer.Options()[rnd]);
 			}
 
-			return Reward.getReward(state, root.State);
+			return false;
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			tree = new Tree(state);
 
 			long start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			long end = start + 80;
+			long end = start + 1000;
 			long time = start;
 
 			while (time < end)
@@ -39,7 +39,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 				bool simulationResult = false;
 				try
 				{
-					simulationResult = RandSimulation.simulatePlay(simulateNode, tree.GetRoot());
+					simulationResult = RandSimulation.simulatePlay(simulateNode);
 				}
 				catch (Exception)
 				{
@@ -53,7 +53,8 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 				time = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			}
 			//Console.WriteLine("Ds");
-			return tree.GetRoot().GetBestChild().nodeTask;
+			var node = tree.GetRoot().GetBestChild();
+			return node.nodeTask;
 		}
 
 		private void backPropagation(Node node, bool simulationResult)
@@ -88,7 +89,8 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 
 			while (optimalNode.childs.Count > 0)
 			{
-				optimalNode = optimalNode.GetBestChild();
+				optimalNode = optimalNode.GetRandomChild();
+				//optimalNode = optimalNode.GetBestChild();
 			}
 			return optimalNode;
 		}

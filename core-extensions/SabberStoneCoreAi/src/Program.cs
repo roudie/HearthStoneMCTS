@@ -47,7 +47,7 @@ namespace SabberStoneCoreAi
 
 			Console.WriteLine("Simulate Games");
 			//gameHandler.PlayGame();
-			gameHandler.PlayGames(nr_of_games:5, addResultToGameStats:true, debug:false);
+			gameHandler.PlayGames(nr_of_games:1, addResultToGameStats:true, debug:true);
 			GameStats gameStats = gameHandler.getGameStats();
 
 			gameStats.printResults();
