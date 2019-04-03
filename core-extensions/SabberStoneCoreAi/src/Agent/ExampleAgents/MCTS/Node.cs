@@ -14,14 +14,15 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 
 		private int visitCounter = 0;
 		private int winCounter = 0;
-		//public int maxState = 0;
+		public int maxState = 0;
+		public int exploredStates = 0;
 		public PlayerTask nodeTask { get; set; }
 
 		public Node(POGame.POGame state)
 		{
 			this.State = state;
 			this.childs = new List<Node>();
-			//maxState = state.CurrentPlayer.Options().Count;
+			maxState = state.CurrentPlayer.Options().Count;
 		}
 
 		public Node(POGame.POGame state, Node parent, PlayerTask nodeTask) : this(state)
@@ -48,11 +49,17 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 
 		public void incVisit()
 		{
+			if (visitCounter == 0)
+				if (Parent!=null)
+					Parent.exploredStates++;
 			visitCounter++;
 		}
 
 		public void incWinAndVisit()
 		{
+			if (visitCounter == 0)
+				if (Parent != null)
+					Parent.exploredStates++;
 			winCounter++;
 			visitCounter++;
 		}
@@ -66,8 +73,16 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 
 		public Node GetBestChild()
 		{
+			if (maxState > exploredStates)
+				for (int i = 0; i < maxState; i++)
+				{
+					if (childs[i].visitCounter == 0)
+						return childs[i];
+				}
+			
 			double bestRatio = childs[0].GetWinRatio();
 			Node child = childs[0];
+
 			foreach (Node n in childs)
 			{
 				if (bestRatio < n.GetWinRatio())

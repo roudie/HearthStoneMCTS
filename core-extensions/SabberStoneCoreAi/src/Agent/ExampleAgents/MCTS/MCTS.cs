@@ -15,7 +15,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			tree = new Tree(state);
 
 			long start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			long end = start + 8000;
+			long end = start + 80;
 			long time = start;
 
 			while (time < end)
@@ -24,7 +24,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 				Node optimalNode = selectNode(tree.GetRoot());
 
 				//Expantion
-				if (optimalNode.nodeTask == null || optimalNode.nodeTask.PlayerTaskType != PlayerTaskType.END_TURN)
+				if (optimalNode.childs.Count == 0)
 				{
 					expandNode(optimalNode);
 				}
@@ -52,7 +52,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 
 				time = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			}
-
+			//Console.WriteLine("Ds");
 			return tree.GetRoot().GetBestChild().nodeTask;
 		}
 
@@ -83,18 +83,12 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 		private static Node selectNode(Node node)
 		{
 			Node optimalNode = node;
+			Node buffNode = optimalNode;
 			double bestRatio = node.GetWinRatio();
 
 			while (optimalNode.childs.Count > 0)
 			{
-				foreach (var n in node.childs)
-				{
-					if (bestRatio < n.GetWinRatio())
-					{
-						bestRatio = n.GetWinRatio();
-						optimalNode = n;
-					}
-				}
+				optimalNode = optimalNode.GetBestChild();
 			}
 			return optimalNode;
 		}
