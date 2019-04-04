@@ -143,10 +143,17 @@ namespace SabberStoneCoreAi.POGame
 		}
 
 		public POGame Simulate(PlayerTask task)
-		{
+		 {
 			Game clone = this.origGame.Clone();
-			clone.Process(task);
-			return new POGame(clone, false);
+			try
+			{
+				clone.Process(task);
+				return new POGame(clone, false);
+			}
+			catch (Exception)
+			{
+				return null;
+			}
 		}
 
 		public POGame getCopy(bool? debug = null)

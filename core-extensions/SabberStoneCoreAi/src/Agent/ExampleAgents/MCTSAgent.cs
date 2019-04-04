@@ -17,7 +17,10 @@ namespace SabberStoneCoreAi.Agent
 		public override PlayerTask GetMove(POGame.POGame poGame)
 		{
 			MCTS mcts = new MCTS();
-			return mcts.nextTask(poGame);
+			var x = mcts.nextTask(poGame);
+			//Console.WriteLine(x.FullPrint());
+			//Console.WriteLine(poGame.FullPrint());
+			return x;
 		}
 
 		public override void InitializeAgent()

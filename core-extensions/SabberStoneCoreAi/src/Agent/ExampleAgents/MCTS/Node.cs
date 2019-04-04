@@ -22,6 +22,13 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 		{
 			this.State = state;
 			this.childs = new List<Node>();
+			if(state==null)
+				Console.WriteLine("state null");
+			if (state.CurrentPlayer == null)
+				Console.WriteLine("state.CurrentPlayer null");
+			if (state.CurrentPlayer.Options() == null)
+				Console.WriteLine("state.CurrentPlayer.Options() null");
+
 			maxState = state.CurrentPlayer.Options().Count;
 		}
 
@@ -73,15 +80,9 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 
 		public Node GetBestChild()
 		{
-			if (maxState > exploredStates)
-				for (int i = 0; i < maxState; i++)
-				{
-					if (childs[i].visitCounter == 0)
-						return childs[i];
-				}
-			
-			double bestRatio = childs[0].GetWinRatio();
-			Node child = childs[0];
+			int rand = new Random().Next(childs.Count);
+			double bestRatio = childs[rand].GetWinRatio();
+			Node child = childs[rand];
 
 			foreach (Node n in childs)
 			{

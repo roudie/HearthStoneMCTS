@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using SabberStoneCore.Enums;
@@ -56,9 +56,14 @@ namespace SabberStoneCoreAi.POGame
 		{
 			if (nr_games > 0)
 			{
+
 				Console.WriteLine($"{nr_games} games with {turns} turns took {(time_per_player[0] + time_per_player[1]).ToString("F4")} ms => " +
 							  $"Avg. {((time_per_player[0] + time_per_player[1]) / nr_games).ToString("F4")} per game " +
 							  $"and {((time_per_player[0] + time_per_player[1]) / (nr_games * turns)).ToString("F8")} per turn!");
+
+				Console.WriteLine($"playerA: "+ time_per_player[0]);
+				Console.WriteLine($"playerB: " + time_per_player[1]);
+
 				Console.WriteLine($"playerA {wins[0] * 100 / nr_games}% vs. playerB {wins[1] * 100 / nr_games}%! number of draws: {draws}");
 				if (exceptions.Count > 0)
 				{

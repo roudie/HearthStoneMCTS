@@ -31,7 +31,10 @@ namespace SabberStoneCoreAi.Agent.ExampleAgents
 		public override PlayerTask GetMove(SabberStoneCoreAi.POGame.POGame poGame)
 		{			
 			List<PlayerTask> options = poGame.CurrentPlayer.Options();
-			return options[Rnd.Next(options.Count)];
+			var x = options[Rnd.Next(options.Count)];
+			//Console.WriteLine(x.FullPrint());
+			//Console.WriteLine(poGame.FullPrint());
+			return x;
 		}
 
 

@@ -15,28 +15,29 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			tree = new Tree(state);
 
 			long start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			long end = start + 1000;
+			long end = start + 8000;
 			long time = start;
 
 			while (time < end)
 			{
 				//Selection
-				Node optimalNode = selectNode(tree.GetRoot());
+				Node selectedNode = selectNode(tree.GetRoot());
 
 				//Expantion
-				if (optimalNode.childs.Count == 0)
+				if (selectedNode.childs.Count == 0)
 				{
-					expandNode(optimalNode);
+
+					expandNode(selectedNode);
 				}
 
 				//Simulation
-				Node simulateNode = optimalNode;
+				Node simulateNode = selectedNode;
 				if (simulateNode.childs.Count > 0)
 				{
 					simulateNode = simulateNode.GetRandomChild();
 				}
 
-				bool simulationResult = false;
+				int simulationResult = 0;
 				try
 				{
 					simulationResult = RandSimulation.simulatePlay(simulateNode);
@@ -54,15 +55,16 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			}
 			//Console.WriteLine("Ds");
 			var node = tree.GetRoot().GetBestChild();
+			//Console.WriteLine(node.nodeTask.FullPrint());
 			return node.nodeTask;
 		}
 
-		private void backPropagation(Node node, bool simulationResult)
+		private void backPropagation(Node node, int simulationResult)
 		{
 			Node tempNode = node;
 			while (tempNode != null)
 			{
-				if(simulationResult)
+				if(simulationResult == 1)
 					tempNode.incWinAndVisit();
 				else
 					tempNode.incVisit();
@@ -77,7 +79,9 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			Dictionary<PlayerTask, POGame.POGame> stateSpace = node.State.Simulate(options);
 			foreach (PlayerTask playerTask in options)
 			{
-				node.addChild(new Node(stateSpace.GetValueOrDefault(playerTask), node, playerTask));
+
+				if(stateSpace[playerTask]!=null)
+					node.addChild(new Node(stateSpace[playerTask], node, playerTask));
 			}
 		}
 
