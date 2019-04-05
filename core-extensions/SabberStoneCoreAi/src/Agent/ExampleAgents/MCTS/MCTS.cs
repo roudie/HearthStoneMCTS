@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SabberStoneCore.Model.Entities;
 using SabberStoneCore.Tasks.PlayerTasks;
 using SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree;
 
@@ -15,7 +16,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			tree = new Tree(state);
 
 			long start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			long end = start + 8000;
+			long end = start + 200;
 			long time = start;
 
 			while (time < end)
@@ -42,8 +43,9 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 				{
 					simulationResult = RandSimulation.simulatePlay(simulateNode);
 				}
-				catch (Exception)
+				catch (Exception exception)
 				{
+					Console.WriteLine("Df");
 					break;
 				}
 
@@ -76,8 +78,23 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 		private static void expandNode(Node node)
 		{
 			List<PlayerTask> options = node.State.CurrentPlayer.Options();
+			//options.
 			Dictionary<PlayerTask, POGame.POGame> stateSpace = node.State.Simulate(options);
+			Dictionary<PlayerTask, POGame.POGame> minStateSpace = new Dictionary<PlayerTask, POGame.POGame>();
+			List<int> uniquePlayCardList = new List<int>();
+			
 			foreach (PlayerTask playerTask in options)
+			{
+				if (playerTask.PlayerTaskType == PlayerTaskType.PLAY_CARD)
+				{
+					if (!uniquePlayCardList.Contains(playerTask.Source.Card.AssetId))
+						uniquePlayCardList.Add(playerTask.Source.Card.AssetId);
+					else
+						stateSpace.Remove(playerTask);
+				}
+			}
+			//Console.WriteLine("s");
+			foreach (PlayerTask playerTask in stateSpace.Keys)
 			{
 
 				if(stateSpace[playerTask]!=null)

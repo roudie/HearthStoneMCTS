@@ -42,14 +42,14 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 
 		private static int Simulate(POGame.POGame Game)
 		{
-			POGame.POGame gameClone = Game.getCopy();
-			int initialPlayer = gameClone.CurrentPlayer.PlayerId;
+			POGame.POGame state = Game.getCopy();
+			int initialPlayer = state.CurrentPlayer.PlayerId;
 
 			while (true)
 			{
-				if (gameClone.State == SabberStoneCore.Enums.State.COMPLETE)
+				if (state.State == SabberStoneCore.Enums.State.COMPLETE)
 				{
-					Controller currPlayer = gameClone.CurrentPlayer;
+					Controller currPlayer = state.CurrentPlayer;
 					if (currPlayer.PlayState == SabberStoneCore.Enums.PlayState.WON
 					    && currPlayer.PlayerId == initialPlayer)
 					{
@@ -60,21 +60,26 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 					{
 						return 0;
 					}
+					Console.WriteLine("DRAW??");
+					throw new Exception("DRAW??");
 				}
 
-				List<PlayerTask> options = gameClone.CurrentPlayer.Options();
+				List<PlayerTask> options = state.CurrentPlayer.Options();
 				int randomNumber = rand.Next(options.Count);
 				PlayerTask action = options[randomNumber];
 				try
 				{
 					// Process fails as soon as opponent plays a card, so use simulate here
-					gameClone = gameClone.Simulate( action );
+					POGame.POGame state1 = state.Simulate( action );
 					
-					if (gameClone == null)
+					if (state1 == null)
 					{
 
-						//Console.WriteLine(action.FullPrint());
+						Console.WriteLine(action.FullPrint());
+						Console.WriteLine(state.FullPrint());
 					}
+
+					state = state1;
 				}
 				catch (Exception e)
 				{

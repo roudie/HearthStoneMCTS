@@ -16,7 +16,7 @@ namespace SabberStoneCoreAi.src.Agent.ZentiNextAgent.mcts
 		public static PlayerTask findNextMove(POGame.POGame poGame) {
 			tree = new tree.Tree(poGame);
 			long start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			long end = start + 150;
+			long end = start + 30;
 			long time = start;
 			while (time < end)
 			{
