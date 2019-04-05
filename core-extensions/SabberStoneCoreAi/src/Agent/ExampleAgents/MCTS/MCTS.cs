@@ -27,7 +27,6 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 				//Expantion
 				if (selectedNode.childs.Count == 0)
 				{
-
 					expandNode(selectedNode);
 				}
 
