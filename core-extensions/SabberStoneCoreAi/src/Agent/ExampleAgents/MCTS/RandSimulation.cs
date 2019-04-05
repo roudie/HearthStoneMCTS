@@ -69,10 +69,11 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 				{
 					// Process fails as soon as opponent plays a card, so use simulate here
 					gameClone = gameClone.Simulate( action );
-					
+					Console.WriteLine(action.FullPrint());
+					Console.WriteLine(gameClone.CurrentPlayer.Hero.Health + "\t" + gameClone.CurrentOpponent.Hero.Health);
 					if (gameClone == null)
 					{
-
+						Console.WriteLine("Error action");
 						//Console.WriteLine(action.FullPrint());
 					}
 				}

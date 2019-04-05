@@ -15,7 +15,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			tree = new Tree(state);
 
 			long start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			long end = start + 8000;
+			long end = start + 1000;
 			long time = start;
 
 			while (time < end)
@@ -26,7 +26,6 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 				//Expantion
 				if (selectedNode.childs.Count == 0)
 				{
-
 					expandNode(selectedNode);
 				}
 
