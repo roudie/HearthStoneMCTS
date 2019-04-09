@@ -62,12 +62,12 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 			visitCounter++;
 		}
 
-		public void incWinAndVisit()
+		public void incWinAndVisit(double winScore)
 		{
 			if (visitCounter == 0)
 				if (Parent != null)
 					Parent.exploredStates++;
-			winCounter++;
+			winCounter += winCounter;
 			visitCounter++;
 		}
 

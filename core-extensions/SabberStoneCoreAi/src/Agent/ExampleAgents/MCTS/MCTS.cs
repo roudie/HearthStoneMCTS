@@ -16,7 +16,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			tree = new Tree(state);
 
 			long start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			long end = start + 200;
+			long end = start + 300;
 			long time = start;
 
 			while (time < end)
@@ -37,14 +37,16 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 					simulateNode = simulateNode.GetRandomChild();
 				}
 
-				int simulationResult = 0;
+				double simulationResult = 0;
 				try
 				{
 					simulationResult = RandSimulation.simulatePlay(simulateNode);
 				}
 				catch (Exception exception)
 				{
-					Console.WriteLine("Df");
+					Console.WriteLine(exception.StackTrace);
+					Console.WriteLine(exception.Source);
+
 					break;
 				}
 
@@ -57,18 +59,16 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			//Console.WriteLine("Ds");
 			var node = tree.GetRoot().GetBestChild();
 			//Console.WriteLine(node.nodeTask.FullPrint());
+			Console.WriteLine(node.State.origGame.Player2.Hero.Health + "\t" + node.State.origGame.Player1.Hero.Health);
 			return node.nodeTask;
 		}
 
-		private void backPropagation(Node node, int simulationResult)
+		private void backPropagation(Node node, double simulationResult)
 		{
 			Node tempNode = node;
 			while (tempNode != null)
 			{
-				if(simulationResult == 1)
-					tempNode.incWinAndVisit();
-				else
-					tempNode.incVisit();
+				tempNode.incWinAndVisit(simulationResult);
 				
 				tempNode = tempNode.Parent;
 			}
@@ -76,30 +76,32 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 
 		private static void expandNode(Node node)
 		{
-			List<PlayerTask> options = node.State.CurrentPlayer.Options();
-			//options.
-			Dictionary<PlayerTask, POGame.POGame> stateSpace = node.State.Simulate(options);
-			Dictionary<PlayerTask, POGame.POGame> minStateSpace = new Dictionary<PlayerTask, POGame.POGame>();
-			List<int> uniquePlayCardList = new List<int>();
-			
-			foreach (PlayerTask playerTask in options)
-			{
-				if (playerTask.PlayerTaskType == PlayerTaskType.PLAY_CARD)
-				{
-					if (!uniquePlayCardList.Contains(playerTask.Source.Card.AssetId))
-						uniquePlayCardList.Add(playerTask.Source.Card.AssetId);
-					else
-						stateSpace.Remove(playerTask);
-				}
-			}
-			//Console.WriteLine("s");
-			foreach (PlayerTask playerTask in stateSpace.Keys)
-			{
+			//List<PlayerTask> options = node.State.CurrentPlayer.Options();
+			////options.
+			//Dictionary<PlayerTask, POGame.POGame> stateSpace = node.State.Simulate(options);
+			////Dictionary<PlayerTask, POGame.POGame> minStateSpace = new Dictionary<PlayerTask, POGame.POGame>();
+			//List<int> uniquePlayCardList = new List<int>();
 
-				if(stateSpace[playerTask]!=null)
-					node.addChild(new Node(stateSpace[playerTask], node, playerTask));
+			//foreach (PlayerTask playerTask in options)
+			//{
+			//	if (playerTask.PlayerTaskType == PlayerTaskType.PLAY_CARD)
+			//	{
+			//		if (!uniquePlayCardList.Contains(playerTask.Source.Card.AssetId))
+			//			uniquePlayCardList.Add(playerTask.Source.Card.AssetId);
+			//		else
+			//			stateSpace.Remove(playerTask);
+			//	}
+			//}
+			//Console.WriteLine("s");
+			var options = RandSimulation.GetUniqueTasks(node.State);
+			var states = node.State.Simulate(options);
+			foreach (var buff in states)
+			{
+				node.addChild(new Node(buff.Value, node, buff.Key));
 			}
 		}
+
+
 
 		private static Node selectNode(Node node)
 		{

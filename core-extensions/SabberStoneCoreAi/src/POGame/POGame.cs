@@ -17,7 +17,7 @@ namespace SabberStoneCoreAi.POGame
 	partial class POGame
 	{
 		private Game game;
-		private Game origGame;
+		public Game origGame;
 		private bool debug;
 			
 		public POGame(Game game, bool debug)
@@ -134,27 +134,30 @@ namespace SabberStoneCoreAi.POGame
 					clone.Process(task);
 					simulated.Add(task, new POGame(clone, this.debug));
 				}
-				catch (Exception)
+				catch (Exception e)
 				{
+					Console.WriteLine(e.StackTrace);
 					simulated.Add(task, null);
+					simulated.Add(task, new POGame(clone, this.debug));
 				}
 			}
 			return simulated;
 		}
 
-		public POGame Simulate(PlayerTask task)
+		public POGame Simulate(PlayerTask task, Game baseGame)
 		 {
 			Game clone = this.origGame.Clone();
-			try
+			//try
 			{
 				if(!clone.Process(task))
 					Console.WriteLine("error1");
 				clone.Process(task);
 				return new POGame(clone, false);
 			}
-			catch (Exception)
+			//catch (Exception)
 			{
-				return null;
+				//var x = clone.Turn;
+				//return null;
 			}
 		}
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using SabberStoneCore.Config;
 using SabberStoneCore.Enums;
@@ -8,6 +8,7 @@ using SabberStoneCore.Tasks;
 using SabberStoneCoreAi.Agent;
 using SabberStoneCore.Tasks.PlayerTasks;
 using SabberStoneCoreAi.Utils;
+using System.Collections.Generic;
 
 namespace SabberStoneCoreAi.POGame
 {
@@ -51,7 +52,9 @@ namespace SabberStoneCoreAi.POGame
 			Stopwatch[] watches = new[] {new Stopwatch(), new Stopwatch()};
 			
 			game.StartGame();
-			
+			//game.Process(ChooseTask.Mulligan(game.Player1, new List<int>()));
+			//game.Process(ChooseTask.Mulligan(game.Player2, new List<int>()));
+
 			try
 			{
 				while (game.State != State.COMPLETE && game.State != State.INVALID )
