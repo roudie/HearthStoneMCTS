@@ -12,8 +12,8 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 		public Node Parent { get; set; }
 		public List<Node> childs { get; }
 
-		private int visitCounter = 0;
-		private double winCounter = 0;
+		public int visitCounter = 0;
+		public double winCounter = 0;
 		public int maxState = 0;
 		public int exploredStates = 0;
 		public PlayerTask nodeTask { get; set; }
