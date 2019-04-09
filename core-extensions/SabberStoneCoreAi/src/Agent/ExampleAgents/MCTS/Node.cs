@@ -13,7 +13,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 		public List<Node> childs { get; }
 
 		private int visitCounter = 0;
-		private int winCounter = 0;
+		private double winCounter = 0;
 		public int maxState = 0;
 		public int exploredStates = 0;
 		public PlayerTask nodeTask { get; set; }
@@ -67,7 +67,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 			if (visitCounter == 0)
 				if (Parent != null)
 					Parent.exploredStates++;
-			winCounter += winCounter;
+			winCounter += winScore;
 			visitCounter++;
 		}
 

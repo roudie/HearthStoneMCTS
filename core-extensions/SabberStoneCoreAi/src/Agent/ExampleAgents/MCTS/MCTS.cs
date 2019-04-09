@@ -16,7 +16,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			tree = new Tree(state);
 
 			long start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			long end = start + 300;
+			long end = start + 200;
 			long time = start;
 
 			while (time < end)
@@ -57,7 +57,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 				time = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			}
 			//Console.WriteLine("Ds");
-			var node = tree.GetRoot().GetBestChild();
+			var node = this.tree.GetRoot().GetBestChild();
 			//Console.WriteLine(node.nodeTask.FullPrint());
 			Console.WriteLine(node.State.origGame.Player2.Hero.Health + "\t" + node.State.origGame.Player1.Hero.Health);
 			return node.nodeTask;
