@@ -62,9 +62,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 							return 1;
 						return 0;
 					}
-					if (currPlayer.PlayerId == initialPlayer)
-						return 1;
-					return 0;
+					return 0.5;
 					//Console.WriteLine("DRAW??");
 					//throw new Exception("DRAW??");
 				}
