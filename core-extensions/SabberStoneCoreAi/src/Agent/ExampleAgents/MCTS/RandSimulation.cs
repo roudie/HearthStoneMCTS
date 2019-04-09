@@ -44,26 +44,32 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 		{
 			POGame.POGame state = Game.getCopy();
 			int initialPlayer = state.CurrentPlayer.PlayerId;
-
+			var firstPlayer = state.origGame.FirstPlayer.Name;
 			while (true)
 			{
 				if (state.State == SabberStoneCore.Enums.State.COMPLETE)
 				{
 					Controller currPlayer = state.CurrentPlayer;
-					if (currPlayer.PlayState == SabberStoneCore.Enums.PlayState.WON
-					    && currPlayer.PlayerId == initialPlayer)
+					if (state.CurrentPlayer.Hero.Health <= 0)
 					{
+						if (currPlayer.Name == firstPlayer)
+							return 0;
 						return 1;
 					}
-					if (currPlayer.PlayState == SabberStoneCore.Enums.PlayState.LOST
-					    && currPlayer.PlayerId == initialPlayer)
+					else if (state.CurrentOpponent.Hero.Health <= 0)
 					{
+						if (currPlayer.Name == firstPlayer)
+							return 1;
 						return 0;
 					}
+					if (currPlayer.PlayerId == initialPlayer)
+						return 1;
 					return 0;
 					//Console.WriteLine("DRAW??");
 					//throw new Exception("DRAW??");
 				}
+				if (state.CurrentPlayer.Hero.Health < 0 || state.CurrentOpponent.Hero.Health < 0)
+					Console.WriteLine("?");
 
 				List<PlayerTask> options = GetUniqueTasks(state);
 				int randomNumber = rand.Next(options.Count);
@@ -76,7 +82,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 					//game.Process(ChooseTask.Mulligan(game.Player2, new List<int>()));
 
 					Console.WriteLine("rand error rand sim");
-					return 1;
+					return 0;
 
 				}
 				else

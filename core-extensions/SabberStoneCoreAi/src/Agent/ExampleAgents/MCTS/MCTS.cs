@@ -38,17 +38,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 				}
 
 				double simulationResult = 0;
-				try
-				{
-					simulationResult = RandSimulation.simulatePlay(simulateNode);
-				}
-				catch (Exception exception)
-				{
-					Console.WriteLine(exception.StackTrace);
-					Console.WriteLine(exception.Source);
-
-					break;
-				}
+				simulationResult = RandSimulation.simulatePlay(simulateNode);
 
 
 				//Back Propagation
@@ -57,7 +47,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 				time = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			}
 			//Console.WriteLine("Ds");
-			var node = this.tree.GetRoot().GetBestChild();
+			var node = tree.GetRoot().GetBestChild();
 			//Console.WriteLine(node.nodeTask.FullPrint());
 			Console.WriteLine(node.State.origGame.Player2.Hero.Health + "\t" + node.State.origGame.Player1.Hero.Health);
 			return node.nodeTask;
