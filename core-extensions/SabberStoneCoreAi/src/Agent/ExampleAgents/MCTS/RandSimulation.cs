@@ -80,7 +80,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 					//game.Process(ChooseTask.Mulligan(game.Player2, new List<int>()));
 
 					Console.WriteLine("rand error rand sim");
-					return 0;
+					return 0.5;
 
 				}
 				else
@@ -103,6 +103,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 					}
 					catch (Exception e)
 					{
+						return 0;
 						//Debug.WriteLine("Exception during single game simulation");
 						//Console.WriteLine(e.StackTrace);
 						//Console.WriteLine("Exception during single game simulation");

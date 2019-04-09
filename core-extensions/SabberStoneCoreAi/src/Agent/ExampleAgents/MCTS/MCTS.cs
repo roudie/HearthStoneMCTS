@@ -16,9 +16,9 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			tree = new Tree(state);
 
 			long start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			long end = start + 700;
+			long end = start + 10000;
 			long time = start;
-
+			(long x, long z) = (3, 4);
 			while (time < end)
 			{
 				//Selection
