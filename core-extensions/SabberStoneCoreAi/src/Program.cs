@@ -42,14 +42,14 @@ namespace SabberStoneCoreAi
 			};
 
 			Console.WriteLine("Setup POGameHandler");
-			AbstractAgent player2 = new RandomAgent();
+			AbstractAgent player2 = new FaceHunter();
 			List<AbstractAgent> oponents = new List<AbstractAgent> { new RandomAgent(), new FaceHunter() };
 			AbstractAgent player1 = new MCTSAgent();
 			var gameHandler = new POGameHandler(gameConfig, player1, player2, repeatDraws:false);
 
 			Console.WriteLine("Simulate Games");
 			//gameHandler.PlayGame();
-			gameHandler.PlayGames(nr_of_games:10, addResultToGameStats:true, debug:false);
+			gameHandler.PlayGames(nr_of_games:30, addResultToGameStats:true, debug:false);
 			GameStats gameStats = gameHandler.getGameStats();
 
 			gameStats.printResults();

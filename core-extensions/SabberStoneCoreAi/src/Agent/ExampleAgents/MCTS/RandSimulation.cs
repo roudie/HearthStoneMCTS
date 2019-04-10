@@ -62,8 +62,11 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 							return 1;
 						return 0;
 					}
-					return 0.5;
+					//List<PlayerTask> options1 = GetUniqueTasks(state);
+					//.WriteLine(state.FullPrint());
 					//Console.WriteLine("DRAW??");
+					//return 0.5;
+					
 					//throw new Exception("DRAW??");
 				}
 				if (state.CurrentPlayer.Hero.Health < 0 || state.CurrentOpponent.Hero.Health < 0)
@@ -79,7 +82,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 					//game.Process(ChooseTask.Mulligan(game.Player1, new List<int>()));
 					//game.Process(ChooseTask.Mulligan(game.Player2, new List<int>()));
 
-					Console.WriteLine("rand error rand sim");
+					Console.WriteLine("Mulligan err");
 					return 0.5;
 
 				}
@@ -96,13 +99,15 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 						if (state == null)
 						{
 							Console.WriteLine("Error action");
-							state = state.Simulate(action, state.origGame);
+							//state = state.Simulate(action, state.origGame);
 							//Console.WriteLine(action.FullPrint());
 						}
 
 					}
 					catch (Exception e)
 					{
+						//Console.WriteLine(state.FullPrint());
+						//Console.WriteLine(e.StackTrace);
 						return 0;
 						//Debug.WriteLine("Exception during single game simulation");
 						//Console.WriteLine(e.StackTrace);
@@ -110,9 +115,9 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 					}
 				}
 			}
-
-			
 		}
+
+		//public static 
 
 		public static List<PlayerTask> GetUniqueTasks(POGame.POGame state)
 		{

@@ -16,7 +16,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			tree = new Tree(state);
 
 			long start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			long end = start + 10000;
+			long end = start + 20000;
 			long time = start;
 			(long x, long z) = (3, 4);
 			while (time < end)
@@ -50,7 +50,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 			var node = tree.GetRoot().GetBestChild();
 			//Console.WriteLine(node.nodeTask.FullPrint());
 			Console.WriteLine(string.Format("Won: {0}, Size: {1}, Win/All: {2}", this.tree.GetRoot().winCounter, this.tree.GetRoot().visitCounter, this.tree.GetRoot().GetWinRatio()));
-			Console.WriteLine(node.State.origGame.Player2.Hero.Health + "\t" + node.State.origGame.Player1.Hero.Health);
+			//Console.WriteLine(node.State.origGame.Player2.Hero.Health + "\t" + node.State.origGame.Player1.Hero.Health);
 			return node.nodeTask;
 		}
 
@@ -102,7 +102,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 
 			while (optimalNode.childs.Count > 0)
 			{
-				optimalNode = optimalNode.GetRandomChild();
+				optimalNode = optimalNode.SelectChild();
 				//optimalNode = optimalNode.GetBestChild();
 			}
 			return optimalNode;
