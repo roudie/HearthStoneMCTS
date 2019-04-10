@@ -13,6 +13,22 @@ namespace SabberStoneCoreAi.Agent.ExampleAgents
 	{
 		private Random Rnd = new Random();
 
+		public FaceHunter(int givenTime=0)
+		{
+			IterList = new List<int>();
+			GivenTime = givenTime;
+		}
+
+		public override List<int> GetIterList()
+		{
+			return IterList;
+		}
+
+		public override int GetGivenTime()
+		{
+			return GivenTime;
+		}
+
 		public override void InitializeAgent()
 		{
 		}
@@ -27,10 +43,10 @@ namespace SabberStoneCoreAi.Agent.ExampleAgents
 			//Nothing to do here
 		}
 
-		public override PlayerTask GetMove(SabberStoneCoreAi.POGame.POGame poGame)
+		public override (PlayerTask, int) GetMove(SabberStoneCoreAi.POGame.POGame poGame)
 		{
 			List<PlayerTask> options = poGame.CurrentPlayer.Options();
-			return getBestMove(poGame, options);
+			return (getBestMove(poGame, options), 0);
 		}
 
 

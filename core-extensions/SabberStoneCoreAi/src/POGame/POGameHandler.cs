@@ -71,7 +71,7 @@ namespace SabberStoneCoreAi.POGame
 					poGame = new POGame(game, debug);
 
 					currentStopwatch.Start();
-					playertask = currentAgent.GetMove(poGame);
+					playertask = currentAgent.GetMove(poGame).Item1;
 					currentStopwatch.Stop();
 
 					game.CurrentPlayer.Game = game;

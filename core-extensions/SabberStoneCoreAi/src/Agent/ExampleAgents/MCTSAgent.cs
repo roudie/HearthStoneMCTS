@@ -11,15 +11,30 @@ namespace SabberStoneCoreAi.Agent
 {
 	class MCTSAgent : AbstractAgent
 	{
-		public override void FinalizeAgent() { }
-		public override void FinalizeGame() { }
+		public MCTSAgent(int givenTime=0)
+		{
+			IterList = new List<int>();
+			GivenTime = givenTime;
+		}
 
-		public override PlayerTask GetMove(POGame.POGame poGame)
+
+		public override List<int> GetIterList()
+		{
+			return IterList;
+		}
+
+		public override int GetGivenTime()
+		{
+			return GivenTime;
+		}
+
+		public override (PlayerTask, int) GetMove(POGame.POGame poGame)
 		{
 			MCTS mcts = new MCTS();
-			var x = mcts.nextTask(poGame);
+			var x = mcts.nextTask(poGame, GivenTime);
 			//Console.WriteLine(x.FullPrint());
 			//Console.WriteLine(poGame.FullPrint());
+			IterList.Add(x.Item2);
 			return x;
 		}
 
@@ -30,5 +45,8 @@ namespace SabberStoneCoreAi.Agent
 		public override void InitializeGame()
 		{
 		}
+
+		public override void FinalizeAgent() { }
+		public override void FinalizeGame() { }
 	}
 }

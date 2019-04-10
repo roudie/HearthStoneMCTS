@@ -11,14 +11,15 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 	{
 		private Tree tree;
 
-		public PlayerTask nextTask(POGame.POGame state)
+		public (PlayerTask, int) nextTask(POGame.POGame state, int givenTime)
 		{
 			tree = new Tree(state);
 
 			long start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			long end = start + 2000;
+			long end = start + givenTime;
 			long time = start;
 
+			int iterations = 0;
 			while (time < end)
 			{
 				//Selection
@@ -45,13 +46,15 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 				backPropagation(simulateNode, simulationResult);
 
 				time = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+				iterations++;
 			}
 			//Console.WriteLine("Ds");
 			var node = tree.GetRoot().GetBestChild();
 			//Console.WriteLine(node.nodeTask.FullPrint());
 			Console.WriteLine(string.Format("Won: {0}, Size: {1}, Win/All: {2}", this.tree.GetRoot().winCounter, this.tree.GetRoot().visitCounter, this.tree.GetRoot().GetWinRatio()));
 			Console.WriteLine(node.State.origGame.Player2.Hero.Health + "\t" + node.State.origGame.Player1.Hero.Health);
-			return node.nodeTask;
+			//zliczać liczbę iteracji i wypisywać/zwracać w krotce (nodetask, counter)[OK]
+			return (node.nodeTask, iterations);
 		}
 
 		private void backPropagation(Node node, double simulationResult)
