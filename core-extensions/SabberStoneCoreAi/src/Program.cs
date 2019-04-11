@@ -1,4 +1,4 @@
-﻿#region copyright
+#region copyright
 // SabberStone, Hearthstone Simulator in C# .NET Core
 // Copyright (C) 2017-2019 SabberStone Team, darkfriend77 & rnilva
 //
@@ -75,7 +75,7 @@ namespace SabberStoneCoreAi
 				gameHandler.PlayGames(nr_of_games: 3, addResultToGameStats: true, debug: false);
 				Console.WriteLine(String.Format("{0}({1}): iterations: {2}", player.GetType().Name, player.GetGivenTime(), String.Join(", ", player.GetIterList())));
 				//write to file iterations stats
-				string file = @"C:\Users\Jakub\Documents\Semestr 8\Wybrane zagadnienia sztucznej inteligencji\HearthStoneMCTS\iteracje.txt";
+				string file = @"iteracje.txt";
 				WriteToFile(player.GetIterList(), player.GetGivenTime(), file);
 				GameStats gameStats = gameHandler.getGameStats();
 				string results = gameStats.printResults();

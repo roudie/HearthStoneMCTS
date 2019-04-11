@@ -105,7 +105,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTS
 
 			while (optimalNode.childs.Count > 0)
 			{
-				optimalNode = optimalNode.GetRandomChild();
+				optimalNode = optimalNode.SelectChild();
 				//optimalNode = optimalNode.GetBestChild();
 			}
 			return optimalNode;

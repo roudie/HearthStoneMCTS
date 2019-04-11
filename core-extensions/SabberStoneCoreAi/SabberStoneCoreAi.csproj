@@ -5,6 +5,7 @@
     <LangVersion>7.2</LangVersion>
     <StartupObject>SabberStoneCoreAi.Program</StartupObject>
     <NoWin32Manifest>true</NoWin32Manifest>
+    <ApplicationIcon />
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SabberStoneCore\SabberStoneCore.csproj" />

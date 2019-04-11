@@ -12,7 +12,7 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 		public Node Parent { get; set; }
 		public List<Node> childs { get; }
 
-		public int visitCounter = 0;
+		public double visitCounter = 0;
 		public double winCounter = 0;
 		public int maxState = 0;
 		public int exploredStates = 0;
@@ -78,6 +78,27 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 			return (double)winCounter / visitCounter;
 		}
 
+		public Node SelectChild()
+		{
+			int rand = new Random().Next(childs.Count);
+			Node child = childs[rand];
+			
+			double bestRatio = child.winCounter / (double) child.visitCounter +
+			                   1.41 * Math.Sqrt(Math.Log(this.visitCounter) / (double) child.visitCounter);
+//return (nodeWinScore / (double)nodeVisit) + 1.41 * Math.Sqrt(Math.Log(parentVisit) / (double)nodeVisit);
+			foreach (Node n in childs)
+			{
+				double buff = n.winCounter / (double)n.visitCounter +
+				              1.41 * Math.Sqrt(Math.Log(this.visitCounter) / (double)n.visitCounter);
+				if (bestRatio < buff)
+				{
+					bestRatio = buff;
+					child = n;
+				}
+			}
+			return child;
+		}
+
 		public Node GetBestChild()
 		{
 			int rand = new Random().Next(childs.Count);
@@ -88,8 +109,11 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 			{
 				if (bestRatio < n.GetWinRatio())
 				{
-					bestRatio = n.GetWinRatio();
-					child = n;
+					if (n.visitCounter > child.visitCounter)
+					{
+						bestRatio = n.GetWinRatio();
+						child = n;
+					}
 				}
 			}
 			return child;
