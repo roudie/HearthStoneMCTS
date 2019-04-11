@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using SabberStoneCore.Enums;
 using SabberStoneCore.Model;
 
@@ -52,34 +53,46 @@ namespace SabberStoneCoreAi.POGame
 			exceptions.Add(nr_games, e.Message);
 		}
 
-		public void printResults()
+		public string printResults()
 		{
+			StringBuilder sb = new StringBuilder();
 			if (nr_games > 0)
 			{
-
-				Console.WriteLine($"{nr_games} games with {turns} turns took {(time_per_player[0] + time_per_player[1]).ToString("F4")} ms => " +
+				sb.Append($"{nr_games} games with {turns} turns took {(time_per_player[0] + time_per_player[1]).ToString("F4")} ms => " +
 							  $"Avg. {((time_per_player[0] + time_per_player[1]) / nr_games).ToString("F4")} per game " +
-							  $"and {((time_per_player[0] + time_per_player[1]) / (nr_games * turns)).ToString("F8")} per turn!");
+							  $"and {((time_per_player[0] + time_per_player[1]) / (nr_games * turns)).ToString("F8")} per turn!\n");
+				//Console.WriteLine($"{nr_games} games with {turns} turns took {(time_per_player[0] + time_per_player[1]).ToString("F4")} ms => " +
+				//			  $"Avg. {((time_per_player[0] + time_per_player[1]) / nr_games).ToString("F4")} per game " +
+				//			  $"and {((time_per_player[0] + time_per_player[1]) / (nr_games * turns)).ToString("F8")} per turn!");
 
-				Console.WriteLine($"playerA: "+ time_per_player[0]);
-				Console.WriteLine($"playerB: " + time_per_player[1]);
+				sb.Append($"playerA: " + time_per_player[0] + "\n");
+				//Console.WriteLine($"playerA: " + time_per_player[0]);
+				sb.Append($"playerB: " + time_per_player[1] + "\n");
+				//Console.WriteLine($"playerB: " + time_per_player[1]);
 
-				Console.WriteLine($"playerA {wins[0] * 100 / nr_games}% vs. playerB {wins[1] * 100 / nr_games}%! number of draws: {draws}");
+				sb.Append($"playerA {wins[0] * 100 / nr_games}% vs. playerB {wins[1] * 100 / nr_games}%! number of draws: {draws}\n");
+				//Console.WriteLine($"playerA {wins[0] * 100 / nr_games}% vs. playerB {wins[1] * 100 / nr_games}%! number of draws: {draws}");
 				if (exceptions.Count > 0)
 				{
-					Console.WriteLine($"Games lost due to exceptions: playerA - {exception_count[0]}; playerB - {exception_count[1]}");
-					Console.WriteLine("Exception messages:");
+					sb.Append($"Games lost due to exceptions: playerA - {exception_count[0]}; playerB - {exception_count[1]}\n");
+					//Console.WriteLine($"Games lost due to exceptions: playerA - {exception_count[0]}; playerB - {exception_count[1]}");
+					sb.Append("Exception messages:\n");
+					//Console.WriteLine("Exception messages:");
 					foreach (var e in exceptions)
 					{
-						Console.WriteLine($"\tGame {e.Key}: {e.Value}");
+						sb.Append($"\tGame {e.Key}: {e.Value}\n");
+						//Console.WriteLine($"\tGame {e.Key}: {e.Value}");
 					}
-					Console.WriteLine();
+					sb.Append("\n");
+					//Console.WriteLine();
 				}
 			} else
 			{
-				Console.WriteLine("No games played yet. Use Gamehandler.PlayGame() to add games.");
+				sb.Append("No games played yet. Use Gamehandler.PlayGame() to add games.\n");
+				//Console.WriteLine("No games played yet. Use Gamehandler.PlayGame() to add games.");
 			}
-			
+			Console.Write(sb);
+			return sb.ToString();
 		}
 
 		public int GamesPlayed

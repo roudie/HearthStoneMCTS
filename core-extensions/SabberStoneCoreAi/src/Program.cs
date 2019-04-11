@@ -75,28 +75,16 @@ namespace SabberStoneCoreAi
 				gameHandler.PlayGames(nr_of_games: 3, addResultToGameStats: true, debug: false);
 				Console.WriteLine(String.Format("{0}({1}): iterations: {2}", player.GetType().Name, player.GetGivenTime(), String.Join(", ", player.GetIterList())));
 				//write to file iterations stats
-				WriteToFile(player.GetIterList(), player.GetGivenTime(), @"C:\Users\Jakub\Documents\Semestr 8\Wybrane zagadnienia sztucznej inteligencji\HearthStoneMCTS\iteracje.txt");
+				string file = @"C:\Users\Jakub\Documents\Semestr 8\Wybrane zagadnienia sztucznej inteligencji\HearthStoneMCTS\iteracje.txt";
+				WriteToFile(player.GetIterList(), player.GetGivenTime(), file);
 				GameStats gameStats = gameHandler.getGameStats();
-
-				gameStats.printResults();
+				string results = gameStats.printResults();
+				using (StreamWriter sw = File.AppendText(file))
+				{
+					sw.WriteLine(results);
+				}
 				Console.WriteLine(String.Format("{0}({1}): Test successful", player.GetType().Name, player.GetGivenTime()));
 			}
-			//AbstractAgent player2 = new RandomAgent(500);
-			//AbstractAgent player1 = new MCTSAgent(500);
-			//list<abstract agent> puścić grę dla każdego agenta
-			//zbudować liczb iteracji[OK]
-			//czas przetwarzania zadawać w niniejszej klasie, a nie w MCTS[OK]
-			/*var gameHandler = new POGameHandler(gameConfig, player1, player2, repeatDraws:false);
-
-			Console.WriteLine("Simulate Games");
-			//gameHandler.PlayGame();
-			gameHandler.PlayGames(nr_of_games:3, addResultToGameStats:true, debug:false);
-			Console.WriteLine(String.Format("MCTS iterations: {0}", String.Join(", ", player1.GetIterList())));
-			//write to file iterations stats
-			WriteToFile(player1.GetIterList(), 500, @"C:\Users\Jakub\Documents\Semestr 8\Wybrane zagadnienia sztucznej inteligencji\HearthStoneMCTS\iteracje.txt");
-			GameStats gameStats = gameHandler.getGameStats();
-
-			gameStats.printResults();*/
 
 			Console.WriteLine("Testing finished...");
 			Console.ReadLine();
