@@ -8,7 +8,7 @@ using SabberStoneCore.Tasks.PlayerTasks;
 
 namespace SabberStoneCoreAi.Agent
 {
-	abstract class AbstractAgent
+	public abstract class AbstractAgent
 	{
 		protected List<int> IterList;
 		protected int GivenTime;

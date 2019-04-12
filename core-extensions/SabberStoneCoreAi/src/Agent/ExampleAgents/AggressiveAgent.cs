@@ -10,7 +10,7 @@ using SabberStoneCoreAi.Score;
 
 namespace SabberStoneCoreAi.Agent.ExampleAgents
 {
-	class AggressiveAgent : AbstractAgent
+	public class AggressiveAgent : AbstractAgent
 	{
 
 		public AggressiveAgent(int givenTime=0)

@@ -31,15 +31,23 @@ namespace SabberStoneCoreAi.Score
 			int result = 0;
 
 			if (OpBoardZone.Count == 0 && BoardZone.Count > 0)
-				result += 1000;
+				result += 100;
 
-			result += (BoardZone.Count - OpBoardZone.Count) * 50;
+			result += (BoardZone.Count - OpBoardZone.Count) * 10;
 
-			result += (MinionTotHealthTaunt - OpMinionTotHealthTaunt) * 25;
+			if (MinionTotHealth > 0)
+			{
+				result += MinionTotHealth*2;
+				result += MinionTotAtk*2;
+			}
 
-			result += MinionTotAtk;
+			if (OpMinionTotHealth > 0)
+			{
+				result -= OpMinionTotHealth*2;
+				result -= OpMinionTotAtk*2;
+			}
 
-			result += (HeroHp - OpHeroHp) * 10;
+			result -= OpHeroHp;
 
 			return result;
 		}

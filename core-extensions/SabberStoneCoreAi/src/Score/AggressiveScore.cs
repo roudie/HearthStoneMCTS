@@ -16,8 +16,13 @@ namespace SabberStoneCoreAi.Score
 			if (HeroHp < 1)
 				return Int32.MinValue;
 
-			int result = 300;
+			int result = 3000;
 			result -= OpHeroHp * 100;
+
+			if (OpBoardZone.Count == 0 && BoardZone.Count > 0)
+				result += 30;
+
+			result += (BoardZone.Count - OpBoardZone.Count) * 10;
 
 			if (MinionTotHealth > 0)
 			{
@@ -30,8 +35,7 @@ namespace SabberStoneCoreAi.Score
 				result -= OpMinionTotHealth;
 				result -= OpMinionTotAtk;
 			}
-			if (result != 3000)
-				Console.Write("");
+			
 			return result;
 		}
 
