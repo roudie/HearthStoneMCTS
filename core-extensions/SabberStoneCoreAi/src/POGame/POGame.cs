@@ -14,7 +14,7 @@ using SabberStoneCore.Tasks.PlayerTasks;
 
 namespace SabberStoneCoreAi.POGame
 {
-	partial class POGame
+	public partial class POGame
 	{
 		private Game game;
 		public Game origGame;

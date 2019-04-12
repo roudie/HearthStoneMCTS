@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -22,7 +22,11 @@ namespace SabberStoneCoreAi.POGame
 		public GameStats()
 		{
 		}
-		
+
+		public int GetDraws()
+		{
+			return draws;
+		}
 
 		public void addGame(Game game, Stopwatch[] playerWatches)
 		{
