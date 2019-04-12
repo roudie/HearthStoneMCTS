@@ -102,18 +102,15 @@ namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 		public Node GetBestChild()
 		{
 			int rand = new Random().Next(childs.Count);
-			double bestRatio = childs[rand].GetWinRatio();
+			double bestVisitCounter = childs[rand].visitCounter;
 			Node child = childs[rand];
 
 			foreach (Node n in childs)
 			{
-				if (bestRatio < n.GetWinRatio())
+				if (bestVisitCounter < n.visitCounter)
 				{
-					if (n.visitCounter > child.visitCounter)
-					{
-						bestRatio = n.GetWinRatio();
-						child = n;
-					}
+					bestVisitCounter = n.visitCounter;
+					child = n;
 				}
 			}
 			return child;
