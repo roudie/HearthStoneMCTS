@@ -21,6 +21,7 @@ using SabberStoneCoreAi.POGame;
 using SabberStoneCoreAi.Agent.ExampleAgents;
 using SabberStoneCoreAi.Agent;
 using System.IO;
+using SabberStoneCoreAi.src.Statistics;
 
 namespace SabberStoneCoreAi
 {
@@ -52,6 +53,7 @@ namespace SabberStoneCoreAi
 			var players = new List<AbstractAgent>() { new MCTSAgent(200), new MCTSAgent(300), new MCTSAgent(400), new MCTSAgent(500) };
 			foreach (AbstractAgent player in players)
 			{
+				StatsMCTS.Reset();
 				Console.WriteLine(String.Format("{0}({1}): Setup gameConfig", player.GetType().Name, player.GetGivenTime()));
 				var gameConfig = new GameConfig()
 				{
@@ -84,6 +86,8 @@ namespace SabberStoneCoreAi
 					sw.WriteLine(results);
 				}
 				Console.WriteLine(String.Format("{0}({1}): Test successful", player.GetType().Name, player.GetGivenTime()));
+
+				StatsMCTS.Save("StatsMCTSRand.csv", player.GetGivenTime(), gameStats);
 			}
 
 			Console.WriteLine("Testing finished...");

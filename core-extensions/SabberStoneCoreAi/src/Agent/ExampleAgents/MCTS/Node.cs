@@ -6,7 +6,7 @@ using SabberStoneCoreAi.POGame;
 
 namespace SabberStoneCoreAi.src.Agent.ExampleAgents.MCTSTree
 {
-	class Node
+	public class Node
 	{
 		public POGame.POGame State { get; set; }
 		public Node Parent { get; set; }
