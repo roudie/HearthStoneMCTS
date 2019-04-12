@@ -68,7 +68,7 @@ namespace SabberStoneCoreAi
 
 				Console.WriteLine(String.Format("{0}({1}): Setup POGameHandler", player.GetType().Name, player.GetGivenTime()));
 				/*here may be changed to another type of agent*/
-				AbstractAgent opponent = new RandomAgent();
+				AbstractAgent opponent = new AggressiveAgent();
 				/*type of agent*/
 				var gameHandler = new POGameHandler(gameConfig, player, opponent, repeatDraws: false);
 
